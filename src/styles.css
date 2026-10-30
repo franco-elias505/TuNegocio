@@ -192,4 +192,34 @@ app-root .site-shell main .showcase-note {
   app-root .site-shell main .plan-showcase {
     padding: 18px 14px;
   }
+
+  app-root .site-shell main .custom-card {
+    padding: 32px 22px 28px;
+    gap: 24px;
+  }
+
+  app-root .site-shell main .custom-orbit {
+    width: min(52vw, 190px);
+    box-shadow: 0 0 0 20px #111714, 0 0 0 21px #2b3831;
+  }
+
+  app-root .site-shell main .custom-orbit .orbit-node {
+    width: 32px;
+    height: 32px;
+  }
+
+  app-root .site-shell main .custom-orbit .node-one {
+    top: 16px;
+    right: 12px;
+  }
+
+  app-root .site-shell main .custom-orbit .node-two {
+    bottom: 14px;
+    left: 12px;
+  }
+
+  app-root .site-shell main .custom-orbit .node-three {
+    top: calc(50% - 16px);
+    left: -12px;
+  }
 }
