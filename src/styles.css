@@ -32,6 +32,7 @@ svg {
 @media (max-width: 800px) {
   html,
   body {
-    overflow-x: clip;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
   }
 }
