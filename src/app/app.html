@@ -58,14 +58,38 @@
       </div>
     </section>
 
-    <section class="showcase section-wrap">
-      <div class="showcase-copy"><p class="eyebrow">Así se ve por dentro</p><h2>Una herramienta que<br /><span>habla tu idioma.</span></h2><p>Conoce algunas pantallas reales de los módulos del sistema.</p><a class="text-link" href="#planes">Ver opciones <span aria-hidden="true">→</span></a></div>
-      <div class="carousel" aria-roledescription="carrusel" aria-label="Capturas de los módulos del sistema" (mouseenter)="pauseCarousel()" (focusin)="pauseCarousel()">
-        <div class="carousel-window">
-          <img class="carousel-image" [src]="showcaseSlides[activeSlide].image" [alt]="showcaseSlides[activeSlide].alt" />
-        </div>
-        <button class="carousel-control previous" type="button" (click)="selectPreviousSlide()" aria-label="Imagen anterior">←</button><button class="carousel-control next" type="button" (click)="selectNextSlide()" aria-label="Siguiente imagen">→</button>
-        <div class="carousel-caption"><div><strong>{{ showcaseSlides[activeSlide].title }}</strong><p>{{ showcaseSlides[activeSlide].description }}</p></div><div class="carousel-dots"><button *ngFor="let slide of showcaseSlides; let i = index" type="button" [class.active]="activeSlide === i" (click)="goToSlide(i)" [attr.aria-label]="'Ver imagen ' + (i + 1) + ': ' + slide.title" [attr.aria-current]="activeSlide === i ? 'true' : null"></button></div></div>
+    <section class="showcase section-wrap plan-showcases" id="vistas">
+      <div class="section-heading centered showcase-heading">
+        <p class="eyebrow">Conoce cada sistema</p>
+        <h2>Tres planes.<br /><span>Una vista clara.</span></h2>
+        <p>Explora las pantallas incluidas en cada plan.</p>
+      </div>
+      <div class="plan-showcase-list">
+        <article class="plan-showcase" *ngFor="let plan of planShowcases; let planIndex = index" [class.plan-showcase-featured]="planIndex === 1">
+          <div class="showcase-copy">
+            <p class="eyebrow">Plan {{ planIndex + 1 }}</p>
+            <h2>{{ plan.name }}</h2>
+            <p>{{ plan.description }}</p>
+            <p *ngIf="planIndex === 2" class="showcase-note">El acceso móvil funciona conectado a la misma red Wi-Fi local que el equipo del sistema.</p>
+            <a class="text-link" href="#planes">Ver este plan <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="carousel" [attr.aria-label]="'Capturas del plan ' + plan.name" aria-roledescription="carrusel" (mouseenter)="pauseCarousel(planIndex)" (focusin)="pauseCarousel(planIndex)">
+            <div class="carousel-window">
+              <img class="carousel-image" [src]="plan.slides[activePlanSlides[planIndex]].image" [alt]="plan.slides[activePlanSlides[planIndex]].alt" />
+            </div>
+            <button class="carousel-control previous" type="button" (click)="selectPreviousSlide(planIndex)" [attr.aria-label]="'Imagen anterior de ' + plan.name">←</button>
+            <button class="carousel-control next" type="button" (click)="selectNextSlide(planIndex)" [attr.aria-label]="'Siguiente imagen de ' + plan.name">→</button>
+            <div class="carousel-caption">
+              <div>
+                <strong>{{ plan.slides[activePlanSlides[planIndex]].title }}</strong>
+                <p>{{ plan.slides[activePlanSlides[planIndex]].description }}</p>
+              </div>
+              <div class="carousel-dots" [attr.aria-label]="'Seleccionar pantalla del plan ' + plan.name">
+                <button *ngFor="let slide of plan.slides; let slideIndex = index" type="button" [class.active]="activePlanSlides[planIndex] === slideIndex" (click)="goToSlide(planIndex, slideIndex)" [attr.aria-label]="'Ver ' + slide.title" [attr.aria-current]="activePlanSlides[planIndex] === slideIndex ? 'true' : null"></button>
+              </div>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 

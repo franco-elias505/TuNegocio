@@ -8,6 +8,11 @@ body {
   max-width: 100%;
   min-width: 0;
   margin: 0;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: clip;
 }
 
 app-root {
@@ -29,10 +34,162 @@ svg {
   max-width: 100%;
 }
 
+@media (min-width: 801px) {
+  app-root .site-shell main .hero {
+    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+  }
+
+  app-root .site-shell main .showcase:not(.plan-showcases) {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+}
+
 @media (max-width: 800px) {
-  html,
-  body {
-    overflow-x: hidden;
-    overscroll-behavior-x: none;
+  app-root {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  app-root .site-shell {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  app-root .site-shell main .hero,
+  app-root .site-shell main .showcase {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  app-root .site-shell main .hero > *,
+  app-root .site-shell main .showcase > * {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  app-root .site-shell main .custom-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  app-root .site-shell main .custom-orbit {
+    align-self: center;
+  }
+
+  app-root .site-shell main .hero-art {
+    min-width: 0;
+  }
+
+  app-root .site-shell main .floating-stock {
+    left: 0;
+  }
+
+  app-root .site-shell main .floating-sales {
+    right: 0;
+  }
+
+  app-root .site-shell main .custom-orbit {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 540px) {
+  app-root .site-shell main .hero,
+  app-root .site-shell main .showcase,
+  app-root .site-shell main .solutions,
+  app-root .site-shell main .plans,
+  app-root .site-shell main .compare,
+  app-root .site-shell main .custom,
+  app-root .site-shell main .faq,
+  app-root .site-shell main .contact {
+    width: calc(100% - 32px);
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  app-root .site-shell main .hero-art,
+  app-root .site-shell main .hero-copy,
+  app-root .site-shell main .showcase-copy,
+  app-root .site-shell main .carousel,
+  app-root .site-shell main .custom-card > div {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  app-root .site-shell main .comparison-header,
+  app-root .site-shell main .comparison-row {
+    min-width: 0;
+    grid-template-columns: minmax(0, 1.45fr) repeat(3, minmax(0, 1fr));
+  }
+
+  app-root .site-shell main .comparison-header > *,
+  app-root .site-shell main .comparison-row > * {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+app-root .site-shell main .plan-showcases {
+  display: block;
+}
+
+app-root .site-shell main .plan-showcase-list {
+  display: grid;
+  gap: 24px;
+  margin-top: 42px;
+}
+
+app-root .site-shell main .plan-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 52px);
+  min-width: 0;
+  padding: clamp(20px, 4vw, 42px);
+  border: 1px solid #dfe6e2;
+  border-radius: 12px;
+  background: #fff;
+}
+
+app-root .site-shell main .plan-showcase-featured {
+  border-color: #00ad6e;
+  box-shadow: 0 12px 32px #00ad6e12;
+}
+
+app-root .site-shell main .plan-showcase .showcase-copy,
+app-root .site-shell main .plan-showcase .carousel {
+  min-width: 0;
+  max-width: 100%;
+}
+
+app-root .site-shell main .plan-showcase .showcase-copy h2 {
+  margin: 14px 0;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+app-root .site-shell main .showcase-note {
+  padding: 12px 14px;
+  border-left: 3px solid #00ad6e;
+  background: #f0f8f4;
+  color: #46534c;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  app-root .site-shell main .plan-showcase {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  app-root .site-shell main .plan-showcase-list {
+    gap: 16px;
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 540px) {
+  app-root .site-shell main .plan-showcase {
+    padding: 18px 14px;
   }
 }

@@ -18,6 +18,12 @@ interface ShowcaseSlide {
   alt: string;
 }
 
+interface PlanShowcase {
+  name: string;
+  description: string;
+  slides: ShowcaseSlide[];
+}
+
 interface Faq {
   question: string;
   answer: string;
@@ -33,8 +39,8 @@ export class App implements AfterViewInit, OnInit, OnDestroy {
   protected menuOpen = false;
   protected openedFaq: number | null = null;
   protected selectedPlan = 1;
-  protected activeSlide = 0;
-  private autoplayId?: ReturnType<typeof setInterval>;
+  protected readonly activePlanSlides = [0, 0, 0];
+  private readonly autoplayIds: Array<ReturnType<typeof setInterval> | undefined> = [];
   private observer?: IntersectionObserver;
 
   constructor(private readonly host: ElementRef<HTMLElement>) {}
@@ -89,45 +95,59 @@ export class App implements AfterViewInit, OnInit, OnDestroy {
     }
   ];
 
-  protected readonly showcaseSlides: ShowcaseSlide[] = [
+  protected readonly planShowcases: PlanShowcase[] = [
     {
-      title: 'Inventario a primera vista',
-      description: 'Una simulación visual de cómo consultar productos, stock, precios y categorías.',
-      image: '/Inventario.jpeg',
-      alt: 'Pantalla real del módulo de inventario de SC smartbo'
+      name: 'Tu Negocio',
+      description: 'Inventario y catalogo digital para organizar tus productos.',
+      slides: [
+        { title: 'Panel principal', description: 'Una vista general de la operacion.', image: '/tunegocio/Dashboard.jpeg', alt: 'Panel principal del plan Tu Negocio' },
+        { title: 'Inventario', description: 'Consulta productos, precios y existencias.', image: '/tunegocio/Inventario.jpeg', alt: 'Inventario del plan Tu Negocio' },
+        { title: 'Movimientos', description: 'Revisa entradas y salidas de mercaderia.', image: '/tunegocio/Movimientos.jpeg', alt: 'Movimientos del plan Tu Negocio' },
+        { title: 'Catalogo digital', description: 'Organiza productos para compartirlos.', image: '/tunegocio/Catalogo.jpeg', alt: 'Catalogo digital del plan Tu Negocio' },
+        { title: 'Reportes', description: 'Consulta reportes de tu negocio.', image: '/tunegocio/Reportes.jpeg', alt: 'Reportes del plan Tu Negocio' },
+        { title: 'Categorias', description: 'Mantén tus registros organizados.', image: '/tunegocio/Categorias.jpeg', alt: 'Categorias del plan Tu Negocio' },
+        { title: 'Proveedores', description: 'Administra la informacion de proveedores.', image: '/tunegocio/Proveedores.jpeg', alt: 'Proveedores del plan Tu Negocio' }
+      ]
     },
     {
-      title: 'Movimientos del día',
-      description: 'Una simulación visual para revisar ventas, entradas, salidas e ingresos.',
-      image: '/Movimientos.jpeg',
-      alt: 'Pantalla real del módulo de movimientos de SC smartbo'
+      name: 'Tu Negocio Pro',
+      description: 'Suma ventas, caja, movimientos y estadisticas de gestion.',
+      slides: [
+        { title: 'Registro de ventas', description: 'Registra las ventas de tu negocio.', image: '/tunegociopro/Venta.jpeg', alt: 'Registro de ventas del plan Tu Negocio Pro' },
+        { title: 'Control de caja', description: 'Consulta el control de caja y efectivo.', image: '/tunegociopro/caja.jpeg', alt: 'Control de caja del plan Tu Negocio Pro' },
+        { title: 'Estadisticas', description: 'Visualiza estadisticas de la operacion.', image: '/tunegociopro/Estadisticas.jpeg', alt: 'Estadisticas del plan Tu Negocio Pro' },
+        { title: 'Reportes', description: 'Revisa reportes de gestion.', image: '/tunegociopro/reportes.jpeg', alt: 'Reportes del plan Tu Negocio Pro' },
+        { title: 'Catalogos', description: 'Administra los catalogos de productos.', image: '/tunegociopro/catalogos.jpeg', alt: 'Catalogos del plan Tu Negocio Pro' },
+        { title: 'Proveedores', description: 'Consulta registros de proveedores.', image: '/tunegociopro/proveedor.jpeg', alt: 'Proveedores del plan Tu Negocio Pro' }
+      ]
     },
     {
-      title: 'Catálogo listo para compartir',
-      description: 'Una simulación visual de la vista de productos que puedes compartir por WhatsApp.',
-      image: '/Catalogo.jpeg',
-      alt: 'Pantalla real del catálogo digital de SC smartbo'
-    },
-    {
-      title: 'Reportes y estadísticas',
-      description: 'Observa la información de tu operación desde reportes claros.',
-      image: '/Reportes.jpeg',
-      alt: 'Pantalla real de reportes de SC smartbo'
-    },
-    {
-      title: 'Organiza tus categorías',
-      description: 'Mantén tus productos ordenados para encontrarlos fácilmente.',
-      image: '/Categorias.jpeg',
-      alt: 'Pantalla real de categorías de SC smartbo'
+      name: 'Tu Negocio Pro Plus',
+      description: 'Incluye la gestion integral de Pro y una vista portable para dispositivos compatibles en la misma red Wi-Fi local.',
+      slides: [
+        { title: 'Panel principal', description: 'Una vista general de la operacion.', image: '/tunegocioproplus/dashboard.jpeg', alt: 'Panel principal del plan Tu Negocio Pro Plus' },
+        { title: 'Ventas', description: 'Registra las ventas de tu negocio.', image: '/tunegocioproplus/venta.jpeg', alt: 'Ventas del plan Tu Negocio Pro Plus' },
+        { title: 'Control de caja', description: 'Consulta el control de caja y efectivo.', image: '/tunegocioproplus/caja.jpeg', alt: 'Control de caja del plan Tu Negocio Pro Plus' },
+        { title: 'Estadisticas', description: 'Visualiza estadisticas de gestion.', image: '/tunegocioproplus/estadisticas.jpeg', alt: 'Estadisticas del plan Tu Negocio Pro Plus' },
+        { title: 'Reportes', description: 'Revisa reportes de tu operacion.', image: '/tunegocioproplus/resportes.jpeg', alt: 'Reportes del plan Tu Negocio Pro Plus' },
+        { title: 'Catalogos', description: 'Administra tus catalogos de productos.', image: '/tunegocioproplus/catalogos.jpeg', alt: 'Catalogos del plan Tu Negocio Pro Plus' },
+        { title: 'Categorias', description: 'Organiza tus productos por categorias.', image: '/tunegocioproplus/categorias.jpeg', alt: 'Categorias del plan Tu Negocio Pro Plus' },
+        { title: 'Proveedores', description: 'Administra los datos de proveedores.', image: '/tunegocioproplus/proveedores.jpeg', alt: 'Proveedores del plan Tu Negocio Pro Plus' },
+        { title: 'Configuracion', description: 'Consulta las opciones de configuracion del sistema.', image: '/tunegocioproplus/configuracion.jpeg', alt: 'Configuracion del plan Tu Negocio Pro Plus' },
+        { title: 'Uso movil', description: 'Vista portable para dispositivos conectados a la misma red Wi-Fi local.', image: '/tunegocioproplus/UsoMovil.jpeg', alt: 'Vista de uso movil del plan Tu Negocio Pro Plus' }
+      ]
     }
   ];
-
   ngOnInit(): void {
-    this.autoplayId = setInterval(() => this.nextSlide(), 5000);
+    this.planShowcases.forEach((_, planIndex) => {
+      this.autoplayIds[planIndex] = setInterval(() => this.nextSlide(planIndex), 5000);
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.autoplayId) clearInterval(this.autoplayId);
+    this.autoplayIds.forEach((timer) => {
+      if (timer) clearInterval(timer);
+    });
     this.observer?.disconnect();
   }
 
@@ -175,35 +195,38 @@ export class App implements AfterViewInit, OnInit, OnDestroy {
     this.selectedPlan = index;
   }
 
-  protected previousSlide(): void {
-    this.activeSlide = (this.activeSlide + this.showcaseSlides.length - 1) % this.showcaseSlides.length;
+  protected previousSlide(planIndex: number): void {
+    const slides = this.planShowcases[planIndex].slides;
+    this.activePlanSlides[planIndex] = (this.activePlanSlides[planIndex] + slides.length - 1) % slides.length;
   }
 
-  protected nextSlide(): void {
-    this.activeSlide = (this.activeSlide + 1) % this.showcaseSlides.length;
+  protected nextSlide(planIndex: number): void {
+    const slides = this.planShowcases[planIndex].slides;
+    this.activePlanSlides[planIndex] = (this.activePlanSlides[planIndex] + 1) % slides.length;
   }
 
-  protected goToSlide(index: number): void {
-    this.pauseAutoplay();
-    this.activeSlide = index;
+  protected goToSlide(planIndex: number, slideIndex: number): void {
+    this.pauseAutoplay(planIndex);
+    this.activePlanSlides[planIndex] = slideIndex;
   }
 
-  protected selectPreviousSlide(): void {
-    this.pauseAutoplay();
-    this.previousSlide();
+  protected selectPreviousSlide(planIndex: number): void {
+    this.pauseAutoplay(planIndex);
+    this.previousSlide(planIndex);
   }
 
-  protected selectNextSlide(): void {
-    this.pauseAutoplay();
-    this.nextSlide();
+  protected selectNextSlide(planIndex: number): void {
+    this.pauseAutoplay(planIndex);
+    this.nextSlide(planIndex);
   }
 
-  protected pauseCarousel(): void {
-    this.pauseAutoplay();
+  protected pauseCarousel(planIndex: number): void {
+    this.pauseAutoplay(planIndex);
   }
 
-  private pauseAutoplay(): void {
-    if (this.autoplayId) clearInterval(this.autoplayId);
-    this.autoplayId = undefined;
+  private pauseAutoplay(planIndex: number): void {
+    const timer = this.autoplayIds[planIndex];
+    if (timer) clearInterval(timer);
+    this.autoplayIds[planIndex] = undefined;
   }
 }
