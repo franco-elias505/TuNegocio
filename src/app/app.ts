@@ -9,6 +9,7 @@ interface Plan {
   description: string;
   features: string[];
   accent: 'neutral' | 'green';
+  installer: string;
 }
 
 interface ShowcaseSlide {
@@ -73,7 +74,8 @@ export class App implements AfterViewInit, OnInit, OnDestroy {
       total: 'Bs 700',
       description: 'Organiza productos, existencias y un catálogo digital para compartir por WhatsApp.',
       features: ['Inventario y stock', 'Entradas y salidas', 'Fotos, precios y categorías', 'Catálogo digital para WhatsApp'],
-      accent: 'neutral'
+      accent: 'neutral',
+      installer: '/descargas/TuNegocio-Setup.exe'
     },
     {
       name: 'Tu Negocio Pro',
@@ -82,7 +84,8 @@ export class App implements AfterViewInit, OnInit, OnDestroy {
       total: 'Bs 1.000',
       description: 'Suma ventas, caja y reportes para tener una visión más completa de tu operación.',
       features: ['Todo del plan Estándar', 'Registro de ventas diarias', 'Control de caja y efectivo', 'Historial y reportes de gestión'],
-      accent: 'green'
+      accent: 'green',
+      installer: '/descargas/TuNegocio-PRO-Setup.exe'
     },
     {
       name: 'Tu Negocio Pro Plus',
@@ -91,7 +94,8 @@ export class App implements AfterViewInit, OnInit, OnDestroy {
       total: 'Bs 1.200',
       description: 'Incluye todas las funciones anteriores y una vista portable en tu red local.',
       features: ['Todo del plan Pro', 'Vista portable', 'Acceso móvil en la misma red Wi-Fi local', 'Dispositivos compatibles'],
-      accent: 'neutral'
+      accent: 'neutral',
+      installer: '/descargas/TuNegocio-PRO-Plus-Setup.exe'
     }
   ];
 
